@@ -45,8 +45,8 @@ $estados = $conn->query("SELECT * FROM estados");
         <div class="tittle text-center my-3 me-3">
             <h2>Bienvenido, <?php echo $username; ?></h2>
         </div>
-        <button class="btn btn-light me-md-2 p-3" type="button"><a
-                class="link-underline link-dark link-underline-opacity-0" href="logout.php">Cerrar Sesión</a></button>
+        <a
+                class="link-underline link-dark link-underline-opacity-0 btn btn-light me-md-2 p-3" href="logout.php">Cerrar Sesión</a>
     </nav>
 
     <div class="tittle text-center my-3 me-3">
