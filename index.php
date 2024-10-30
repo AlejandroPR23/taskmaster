@@ -122,112 +122,117 @@ $estados = $conn->query("SELECT * FROM estados");
                 <div class="text-dark"><b>Añadir tarea</b></div>
             </div>
         </button>
-        <table id="nueva_tabla" class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Nombre de la Tarea</th>
-                    <th>Descripción</th>
-                    <th>Categoría</th>
-                    <th>Estado</th>
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()) { ?>
+        <div class="table-responsive">
+            <table id="nueva_tabla" class="table table-bordered">
+                <thead class="thead-dark">
                     <tr>
-                        <td class="color"><?php echo $row['Nombre']; ?></td>
-                        <td class="color"><?php echo $row['Descripcion']; ?></td>
-                        <td class="color"><?php echo $row['nombre_categoria']; ?></td>
-                        <td class="estado"><?php echo $row['nombre_estado']; ?></td>
-                        <td class="d-flex justify-content-center gap-2 color p-3">
-                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#editarModal<?php echo $row['ID']; ?>">
-                                <span class="material-icons mr-1">editar</span>
-                            </button>
-
-                            <div class="modal fade" id="editarModal<?php echo $row['ID']; ?>" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-info">
-                                            <h5 class="modal-title" id="modalAddAutor">Editar tarea</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            <form action="update.php" class="needs-validation" method="POST" novalidate>
-                                                <div class="form mb-3">
-                                                    <label for="Nombre" class="form-label">Nombre de la tarea:</label>
-                                                    <input type="text" class="form-control mb-2" name="Nombre"
-                                                        value="<?php echo $row['Nombre'] ?>"
-                                                        placeholder="Nombre de la tarea" required>
-                                                    <div class="invalid-feedback">
-                                                        Por favor, ingrese un nombre para la tarea.
-                                                    </div>
-                                                    <input type="hidden" name="ID" value="<?php echo $row['ID'] ?>">
-                                                    <input type="hidden" name="Usuario"
-                                                        value="<?php echo $row['Usuario'] ?>">
-
-                                                    <label for="Descripcion" class="form-label">Descripción de la
-                                                        tarea:</label>
-                                                    <input type="text" name="Descripcion" class="form-control mb-2"
-                                                        placeholder="Descripcion" value="<?php echo $row['Descripcion'] ?>"
-                                                        required>
-
-                                                    <div class="invalid-feedback">
-                                                        Por favor, ingrese un descripcion para la tarea.
-                                                    </div>
-                                                    <label for="Categoria_edit" class="form-label">Categoria</label>
-                                                    <select name="Categoria" id="Categoria_edit" class="form-select mb-2" required>
-                                                        <option value="">Seleccione una categoria</option>
-                                                        <?php
-                                                        // Iterar sobre las actividades y mostrarlas como opciones
-                                                        foreach ($categorias as $Categoria) {
-                                                            $selected = ($Categoria['ID'] == $row['Categoria']) ? 'selected' : '';
-                                                            echo "<option value='{$Categoria['ID']}' {$selected}>{$Categoria['Nombre']}</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Por favor, seleccione una categoria.
-                                                    </div>
-                                                    <label for="Estado" class="form-label">Estado:</label>
-                                                    <select name="Estado" id="Estado" class="form-select" required>
-                                                        <option value="">Seleccione un estado</option>
-                                                        <?php
-                                                        // Iterar sobre las actividades y mostrarlas como opciones
-                                                        foreach ($estados as $Estado) {
-                                                            $selected = ($Estado['ID'] == $row['Estado']) ? 'selected' : '';
-                                                            echo "<option value='{$Estado['ID']}' {$selected}>{$Estado['Nombre']}</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Por favor, seleccione un estado.
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="gap-2">
-                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <a class="btn btn-danger link-light" href="borrar_tarea.php?ID=<?php echo $row['ID'] ?>">
-                                <span class="fas fa-clipboard-list">Eliminar</span>
-                            </a>
-                        </td>
+                        <th>Nombre de la Tarea</th>
+                        <th>Descripción</th>
+                        <th>Categoría</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($row = $result->fetch_assoc()) { ?>
+                        <tr>
+                            <td class="color"><?php echo $row['Nombre']; ?></td>
+                            <td class="color"><?php echo $row['Descripcion']; ?></td>
+                            <td class="color"><?php echo $row['nombre_categoria']; ?></td>
+                            <td class="estado"><?php echo $row['nombre_estado']; ?></td>
+                            <td class="color">
+                                <div class="d-flex justify-content-center align-middle gap-2 p-4">
+
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                        data-bs-target="#editarModal<?php echo $row['ID']; ?>">
+                                        <span class="material-icons mr-1">editar</span>
+                                    </button>
+        
+                                    <div class="modal fade" id="editarModal<?php echo $row['ID']; ?>" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-info">
+                                                    <h5 class="modal-title" id="modalAddAutor">Editar tarea</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+        
+                                                    <form action="update.php" class="needs-validation" method="POST" novalidate>
+                                                        <div class="form mb-3">
+                                                            <label for="Nombre" class="form-label">Nombre de la tarea:</label>
+                                                            <input type="text" class="form-control mb-2" name="Nombre"
+                                                                value="<?php echo $row['Nombre'] ?>"
+                                                                placeholder="Nombre de la tarea" required>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, ingrese un nombre para la tarea.
+                                                            </div>
+                                                            <input type="hidden" name="ID" value="<?php echo $row['ID'] ?>">
+                                                            <input type="hidden" name="Usuario"
+                                                                value="<?php echo $row['Usuario'] ?>">
+        
+                                                            <label for="Descripcion" class="form-label">Descripción de la
+                                                                tarea:</label>
+                                                            <input type="text" name="Descripcion" class="form-control mb-2"
+                                                                placeholder="Descripcion" value="<?php echo $row['Descripcion'] ?>"
+                                                                required>
+        
+                                                            <div class="invalid-feedback">
+                                                                Por favor, ingrese un descripcion para la tarea.
+                                                            </div>
+                                                            <label for="Categoria_edit" class="form-label">Categoria</label>
+                                                            <select name="Categoria" id="Categoria_edit" class="form-select mb-2" required>
+                                                                <option value="">Seleccione una categoria</option>
+                                                                <?php
+                                                                // Iterar sobre las actividades y mostrarlas como opciones
+                                                                foreach ($categorias as $Categoria) {
+                                                                    $selected = ($Categoria['ID'] == $row['Categoria']) ? 'selected' : '';
+                                                                    echo "<option value='{$Categoria['ID']}' {$selected}>{$Categoria['Nombre']}</option>";
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, seleccione una categoria.
+                                                            </div>
+                                                            <label for="Estado" class="form-label">Estado:</label>
+                                                            <select name="Estado" id="Estado" class="form-select" required>
+                                                                <option value="">Seleccione un estado</option>
+                                                                <?php
+                                                                // Iterar sobre las actividades y mostrarlas como opciones
+                                                                foreach ($estados as $Estado) {
+                                                                    $selected = ($Estado['ID'] == $row['Estado']) ? 'selected' : '';
+                                                                    echo "<option value='{$Estado['ID']}' {$selected}>{$Estado['Nombre']}</option>";
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, seleccione un estado.
+                                                            </div>
+        
+                                                        </div>
+        
+                                                        <div class="gap-2">
+                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                            <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                    </form>
+        
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                    </div>
+                                    <a class="btn btn-danger link-light" href="borrar_tarea.php?ID=<?php echo $row['ID'] ?>">
+                                        <span class="fas fa-clipboard-list">Eliminar</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <?php include ('table_script.html'); ?>
