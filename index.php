@@ -35,19 +35,10 @@ $estados = $conn->query("SELECT * FROM estados");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="container-fluid">
-    <nav class="navbar bg-info border border-3 border-black d-flex justify-start rounded-3">
-        <a class="navbar-brand ms-3" href="#">
-            <img class="rounded-circle border border-black"
-                src="img/Free-Logo-Maker-Get-Custom-Logo-Designs-in-Minutes-Looka.png" alt="Bootstrap" width="130"
-                height="80">
-        </a>
-        <div class="tittle text-center my-3 me-3">
-            <h2>Bienvenido, <?php echo $username; ?></h2>
-        </div>
-        <a
-                class="link-underline link-dark link-underline-opacity-0 btn btn-light me-md-2 p-3" href="logout.php">Cerrar Sesión</a>
-    </nav>
+<body class="container-fluid bg-light">
+   <?php
+    include("./nav1.php");
+   ?>
 
     <div class="tittle text-center my-3 me-3">
         <h2>Tus Tareas</h2>
@@ -254,15 +245,15 @@ $estados = $conn->query("SELECT * FROM estados");
                         });
                         break;
                     case "En progreso":
-                        celda.style.backgroundColor = "LightCyan";
+                        celda.style.backgroundColor = "#B0E0E6";
                         colores.forEach(celda => {
-                            celda.style.backgroundColor = "LightCyan";
+                            celda.style.backgroundColor = "#B0E0E6";
                         });
                         break;
                     case "Completada":
-                        celda.style.backgroundColor = "rgb(127, 255, 0)";
+                        celda.style.backgroundColor = "#8FBC8B";
                         colores.forEach(celda => {
-                            celda.style.backgroundColor = "rgb(127, 255, 0)";
+                            celda.style.backgroundColor = "#8FBC8B";
                         });
                         break;
                     default:
