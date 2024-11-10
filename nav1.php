@@ -1,5 +1,5 @@
 <!-- Header -->
-<nav class="navbar navbar-expand-lg border border-drak-subtle navbar-light bg-light">
+<nav class="navbar navbar-expand-lg border border-drak-subtle navbar-light bg-light rounded rounded-5 border-2">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <a class="navbar-brand ms-3" href="#">
@@ -14,7 +14,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav  p-4 ms-auto">
-                <li class="nav-item mx-3 mb-3"><a class="nav-link btn btn-info" href="./logout.php">Cerrar Sesión</a>
+                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./index.php">Tareas</a>
+                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="completadas.php">Tareas Completadas</a>
+                <li class="nav-item">
+                    <div class="dropdown d-flex justify-content-center">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Ver Modulos
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="./MapasVida.php">Mapas de Mi Vida</a></li>
+                            <li><a class="dropdown-item" href="./Actividades-Metas.php">Actividades de Mis Metas</a></li>
+                            <li><a class="dropdown-item" href="./heisenhower.php">Matriz Heisenhower</a></li>
+                            <li><a class="dropdown-item" href="./heisenhower.php">Logros de mi dia</a></li>
+                            <li><a class="dropdown-item" href="#">Journaling</a></li>
+                            <li><a class="dropdown-item" href="./Planeador.php">Planeador</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./logout.php">Cerrar Sesión</a>
                 </li>
             </ul>
         </div>
