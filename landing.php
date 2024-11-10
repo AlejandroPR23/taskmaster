@@ -110,7 +110,7 @@
     <section class="text-center py-5">
         <h2>Comienza a organizarte hoy</h2>
         <p>Regístrate y empieza a gestionar tus tareas de manera eficiente con TaskMaster.</p>
-        <a href="./login.php" class="cta-btn btn btn-info">Únete ahora</a>
+        <a href="./registro.php" class="cta-btn btn btn-info">Únete ahora</a>
     </section>
 
     <!-- Footer -->
