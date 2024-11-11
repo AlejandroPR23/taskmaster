@@ -13,10 +13,19 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav  p-4 ms-auto">
-                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./index.php">Tareas</a>
-                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./completadas.php">Tareas Completadas</a>
-                <li class="nav-item">
+            <ul class="navbar-nav p-4 ms-auto">
+                <li class="nav-item mx-3"><a class="nav-link btn btn-info" href="./index.php">Tareas</a></li>
+                <li class="nav-item mx-3"><a class="nav-link btn btn-info" href="./completadas.php">Tareas Completadas</a></li>
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link btn btn-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mapas de Mi Vida
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="./AreasVida.php">Áreas de Mi Vida</a></li>
+                        <li><a class="dropdown-item" href="./MapasVida.php">Metas de Mi Vida</a></li>
+                    </ul>
+                </li>
+                <!-- <li class="nav-item">
                     <div class="dropdown d-flex justify-content-center">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -26,14 +35,13 @@
                             <li><a class="dropdown-item" href="./MapasVida.php">Mapas de Mi Vida</a></li>
                             <li><a class="dropdown-item" href="./Actividades-Metas.php">Actividades de Mis Metas</a></li>
                             <li><a class="dropdown-item" href="./heisenhower.php">Matriz Heisenhower</a></li>
-                            <li><a class="dropdown-item" href="./heisenhower.php">Logros de mi dia</a></li>
-                            <li><a class="dropdown-item" href="#">Journaling</a></li>
+                            <li><a class="dropdown-item" href="./heisenhower.php">Logros de mi día</a></li>
+                            <li><a class="dropdown-item" href="./diario.php">Diario</a></li>
                             <li><a class="dropdown-item" href="./Planeador.php">Planeador</a></li>
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./logout.php">Cerrar Sesión</a>
-                </li>
+                </li> -->
+                <li class="nav-item mx-3"><a class="nav-link btn btn-info" href="./logout.php">Cerrar Sesión</a></li>
             </ul>
         </div>
     </div>
