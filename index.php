@@ -9,12 +9,22 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 $id = $_SESSION['Id'];
 
-$sql = "SELECT tareas.ID, tareas.Nombre, tareas.Descripcion, tareas.Categoria, tareas.Estado, tareas.Usuario, categorias.Nombre AS 'nombre_categoria', estados.Nombre AS 'nombre_estado', usuarios.ID as 'user'
+// Verifica si hay una categoría seleccionada
+$categoriaSeleccionada = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+
+// Construye la consulta SQL base
+$sql = "SELECT tareas.ID, tareas.Nombre, tareas.Descripcion, tareas.Categoria, tareas.Estado, tareas.Usuario, 
+        categorias.Nombre AS 'nombre_categoria', estados.Nombre AS 'nombre_estado', usuarios.ID as 'user'
         FROM tareas 
         JOIN categorias ON tareas.Categoria = categorias.ID
         JOIN estados ON tareas.Estado = estados.ID
-        JOIN usuarios ON tareas.Usuario= usuarios.ID
-        WHERE usuarios.nombre='$username'";
+        JOIN usuarios ON tareas.Usuario = usuarios.ID
+        WHERE usuarios.nombre='$username' AND tareas.Estado != 3";
+
+// Añade una cláusula de filtro si hay una categoría seleccionada
+if ($categoriaSeleccionada) {
+    $sql .= " AND categorias.Nombre = '$categoriaSeleccionada'";
+}
 
 $result = $conn->query($sql);
 
@@ -31,14 +41,15 @@ $estados = $conn->query("SELECT * FROM estados");
     <title>TaskMaster Solutions</title>
     <link rel="shortcut icon" href="img/Free-Logo-Maker-Get-Custom-Logo-Designs-in-Minutes-Looka.ico"
         type="image/x-icon">
-    <?php include ('table_header.html'); ?>
+    <?php include('table_header.html'); ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body class="bg-light">
-   <?php
+    <?php
     include("./nav1.php");
-   ?>
+    ?>
 
     <div class="tittle text-center my-3 me-3">
         <h2>Tus Tareas</h2>
@@ -56,7 +67,8 @@ $estados = $conn->query("SELECT * FROM estados");
                     <form action="agregar_tarea.php" class="needs-validation" method="POST" novalidate>
                         <div class="form-group mb-3">
                             <label for="Nombre" class="form-label">Nombre tarea:</label>
-                            <input type="text" name="Nombre" class="form-control" id="Nombre" placeholder="Nombre de la tarea" required>
+                            <input type="text" name="Nombre" class="form-control" id="Nombre"
+                                placeholder="Nombre de la tarea" required>
                             <div class="valid-feedback">
                                 ¡Perfecto!
                             </div>
@@ -66,7 +78,8 @@ $estados = $conn->query("SELECT * FROM estados");
                         </div>
                         <div class="form-group mb-3">
                             <label for="Descripcion" class="form-label">Descripción de la tarea:</label>
-                            <input type="text" name="Descripcion" class="form-control" id="Descripcion" placeholder="Descripción de la tarea" required>
+                            <input type="text" name="Descripcion" class="form-control" id="Descripcion"
+                                placeholder="Descripción de la tarea" required>
                             <div class="valid-feedback">
                                 ¡Perfecto!
                             </div>
@@ -103,16 +116,26 @@ $estados = $conn->query("SELECT * FROM estados");
             </div>
         </div>
     </div>
-    
 
-    
+
+
     <div class="container mt-5">
-        <button type="button" class="btn btn-info btn-md mb-4 p-2 rounded-5" data-bs-toggle="modal"
-            data-bs-target="#modalAdd">
-            <div class="d-flex align-items-center p-2">
-                <div class="text-dark"><b>Añadir tarea</b></div>
+        <div class="d-flex justify-content-between mb-4 gap-2">
+            <div>
+                <button type="button" class="btn btn-info btn-md p-2 rounded-5" data-bs-toggle="modal"
+                    data-bs-target="#modalAdd">
+                    <div class="d-flex align-items-center p-2">
+                        <div class="text-dark"><b>Añadir tarea</b></div>
+                    </div>
+                </button>
             </div>
-        </button>
+            <div>
+                <button onclick="filtrarTareas('')" class="btn btn-info btn-md p-3 rounded-4">Todas</button>
+                <button onclick="filtrarTareas('Personal')" class="btn btn-info btn-md p-3 rounded-4">Personal</button>
+                <button onclick="filtrarTareas('Trabajo')" class="btn btn-info btn-md p-3 rounded-4">Trabajo</button>
+                <button onclick="filtrarTareas('Estudio')" class="btn btn-info btn-md p-3 rounded-4">Estudio</button>
+            </div>
+        </div>
         <div class="table-responsive">
             <table id="nueva_tabla" class="table table-bordered">
                 <thead class="thead-dark">
@@ -129,16 +152,16 @@ $estados = $conn->query("SELECT * FROM estados");
                         <tr>
                             <td class="color"><?php echo $row['Nombre']; ?></td>
                             <td class="color"><?php echo $row['Descripcion']; ?></td>
-                            <td class="color"><?php echo $row['nombre_categoria']; ?></td>
-                            <td class="estado"><?php echo $row['nombre_estado']; ?></td>
+                            <td class="color text-center"><?php echo $row['nombre_categoria']; ?></td>
+                            <td class="estado text-center"><?php echo "<span class='badge text-bg-secondary bg-success'>{$row['nombre_estado']}</span>";?></td>
                             <td class="color">
                                 <div class="d-flex justify-content-center align-middle gap-2 p-4">
 
                                     <button type="button" class="btn btn-info" data-bs-toggle="modal"
                                         data-bs-target="#editarModal<?php echo $row['ID']; ?>">
-                                        <span class="material-icons mr-1">editar</span>
+                                        <span><i class="fa-solid fa-pen-to-square text-light"></i></span>
                                     </button>
-        
+
                                     <div class="modal fade" id="editarModal<?php echo $row['ID']; ?>" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -148,10 +171,12 @@ $estados = $conn->query("SELECT * FROM estados");
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-        
-                                                    <form action="update.php" class="needs-validation" method="POST" novalidate>
+
+                                                    <form action="update.php" class="needs-validation" method="POST"
+                                                        novalidate>
                                                         <div class="form mb-3">
-                                                            <label for="Nombre" class="form-label">Nombre de la tarea:</label>
+                                                            <label for="Nombre" class="form-label">Nombre de la
+                                                                tarea:</label>
                                                             <input type="text" class="form-control mb-2" name="Nombre"
                                                                 value="<?php echo $row['Nombre'] ?>"
                                                                 placeholder="Nombre de la tarea" required>
@@ -161,18 +186,19 @@ $estados = $conn->query("SELECT * FROM estados");
                                                             <input type="hidden" name="ID" value="<?php echo $row['ID'] ?>">
                                                             <input type="hidden" name="Usuario"
                                                                 value="<?php echo $row['Usuario'] ?>">
-        
+
                                                             <label for="Descripcion" class="form-label">Descripción de la
                                                                 tarea:</label>
                                                             <input type="text" name="Descripcion" class="form-control mb-2"
-                                                                placeholder="Descripcion" value="<?php echo $row['Descripcion'] ?>"
-                                                                required>
-        
+                                                                placeholder="Descripcion"
+                                                                value="<?php echo $row['Descripcion'] ?>" required>
+
                                                             <div class="invalid-feedback">
                                                                 Por favor, ingrese un descripcion para la tarea.
                                                             </div>
                                                             <label for="Categoria_edit" class="form-label">Categoria</label>
-                                                            <select name="Categoria" id="Categoria_edit" class="form-select mb-2" required>
+                                                            <select name="Categoria" id="Categoria_edit"
+                                                                class="form-select mb-2" required>
                                                                 <option value="">Seleccione una categoria</option>
                                                                 <?php
                                                                 // Iterar sobre las actividades y mostrarlas como opciones
@@ -199,23 +225,25 @@ $estados = $conn->query("SELECT * FROM estados");
                                                             <div class="invalid-feedback">
                                                                 Por favor, seleccione un estado.
                                                             </div>
-        
+
                                                         </div>
-        
+
                                                         <div class="gap-2">
-                                                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Actualizar</button>
                                                             <button type="button" class="btn btn-danger"
                                                                 data-bs-dismiss="modal">Cancelar</button>
                                                         </div>
                                                     </form>
-        
+
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                     </div>
-                                    <a class="btn btn-danger link-light" href="borrar_tarea.php?ID=<?php echo $row['ID'] ?>">
-                                        <span class="fas fa-clipboard-list">Eliminar</span>
+                                    <a class="btn btn-danger link-light"
+                                        href="borrar_tarea.php?ID=<?php echo $row['ID'] ?>">
+                                        <span><i class="fa-solid fa-trash"></i></span>
                                     </a>
                                 </div>
                             </td>
@@ -226,9 +254,16 @@ $estados = $conn->query("SELECT * FROM estados");
         </div>
     </div>
 
-    <?php include ('table_script.html'); ?>
+    <?php include('table_script.html'); ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function filtrarTareas(categoria) {
+            // Redirige a la misma página pero con un parámetro de categoría en la URL
+            window.location.href = `?categoria=${categoria}`;
+        }
+    </script>
 
     <script>
         function cambiarColorCelda() {
@@ -239,9 +274,9 @@ $estados = $conn->query("SELECT * FROM estados");
                 const colores = fila.querySelectorAll(".color");
                 switch (texto) {
                     case "Pendiente":
-                        celda.style.backgroundColor = "Gainsboro";
+                        celda.style.backgroundColor = "#FFE0B2";
                         colores.forEach(celda => {
-                            celda.style.backgroundColor = "Gainsboro";
+                            celda.style.backgroundColor = "#FFE0B2";
                         });
                         break;
                     case "En progreso":

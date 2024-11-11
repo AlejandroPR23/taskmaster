@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav  p-4 ms-auto">
                 <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./index.php">Tareas</a>
-                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="completadas.php">Tareas Completadas</a>
+                <li class="nav-item mx-3 "><a class="nav-link btn btn-info" href="./completadas.php">Tareas Completadas</a>
                 <li class="nav-item">
                     <div class="dropdown d-flex justify-content-center">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
