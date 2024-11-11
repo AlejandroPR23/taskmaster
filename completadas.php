@@ -53,14 +53,15 @@ $result = $conn->query($sql);
     </div>
 
     <div class="container mt-5">
-        <div class="d-flex justify-content-end mb-4 gap-2">
-            <div>
+        <div class="d-flex justify-content-end mt-1 mb-4 gap-2 flex-wrap">
+            <div class="d-flex flex-wrap gap-2">
                 <button onclick="filtrarTareas('')" class="btn btn-info btn-md p-3 rounded-4">Todas</button>
                 <button onclick="filtrarTareas('Personal')" class="btn btn-info btn-md p-3 rounded-4">Personal</button>
                 <button onclick="filtrarTareas('Trabajo')" class="btn btn-info btn-md p-3 rounded-4">Trabajo</button>
                 <button onclick="filtrarTareas('Estudio')" class="btn btn-info btn-md p-3 rounded-4">Estudio</button>
             </div>
         </div>
+
         <div class="table-responsive">
             <table id="nueva_tabla" class="table table-bordered">
                 <thead class="thead-dark">
@@ -78,7 +79,9 @@ $result = $conn->query($sql);
                             <td class="color"><?php echo $row['Nombre']; ?></td>
                             <td class="color"><?php echo $row['Descripcion']; ?></td>
                             <td class="color text-center"><?php echo $row['nombre_categoria']; ?></td>
-                            <td class="estado text-center"><?php echo "<span class='badge text-bg-secondary bg-success'>{$row['nombre_estado']}</span>";?></td>
+                            <td class="estado text-center">
+                                <?php echo "<span class='badge text-bg-secondary bg-success'>{$row['nombre_estado']}</span>"; ?>
+                            </td>
                             <td class="color">
                                 <div class="d-flex justify-content-center align-middle gap-2 p-4">
                                     <a class="btn btn-danger link-light"
