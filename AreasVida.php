@@ -87,7 +87,7 @@ $result = $conn->query($sql);
 
         <div class="table-responsive">
             <table id="nueva_tabla1" class="table table-bordered">
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th class="text-center">Nombre del area / proyecto</th>
                         <th class="text-center">Acciones</th>
